@@ -1,4 +1,4 @@
-import cPickle
+import pickle
 import traj_dist.distance as  tdist
 import numpy as  np
 import multiprocessing
@@ -45,8 +45,8 @@ def trajectory_distance_batch(i, batch_trjs, trjs, metric_type = "hausdorff", da
     #     trs_matrix = tdist.cdist(batch_trjs, trjs, metric=metric_type, eps=0.003)
     else:
         trs_matrix = tdist.cdist(batch_trjs, trjs, metric=metric_type)
-    cPickle.dump(trs_matrix, open('./features/'+data_name+'_'+metric_type+'_distance_' + str(i), 'w'))
-    print 'complete: '+str(i)
+    pickle.dump(trs_matrix, open('./features/'+data_name+'_'+metric_type+'_distance_' + str(i), 'wb'))
+    print('complete: '+str(i))
 
 
 def trajectory_distance_combain(trajs_len, batch_size = 100, metric_type = "hausdorff", data_name = 'porto'):
@@ -54,12 +54,13 @@ def trajectory_distance_combain(trajs_len, batch_size = 100, metric_type = "haus
     a = 0
     for i in range(1,trajs_len+1):
         if (i!=0) & (i%batch_size == 0):
-            distance_list.append(cPickle.load(open('./features/'+data_name+'_'+metric_type+'_distance_' + str(i))))
-            print distance_list[-1].shape
+            temp = pickle.load(open('./features/'+data_name+'_'+metric_type+'_distance_' + str(i),"rb"))
+            distance_list.append(temp)
+            print(distance_list[-1].shape)
     a = distance_list[-1].shape[1]
     distances = np.array(distance_list)
-    print distances.shape
+    print(distances.shape)
     all_dis = distances.reshape((trajs_len,a))
-    print all_dis.shape
-    cPickle.dump(all_dis,open('./features/'+data_name+'_'+metric_type+'_distance_all_'+str(trajs_len),'w'))
+    print(all_dis.shape)
+    pickle.dump(all_dis,open('./features/'+data_name+'_'+metric_type+'_distance_all_'+str(trajs_len),'wb'))
     return all_dis

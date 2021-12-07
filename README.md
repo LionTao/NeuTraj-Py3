@@ -1,3 +1,13 @@
+# NeuTraj-Py3
+
+This is python3 version of [NeuTraj](https://github.com/yaodi833/NeuTraj)
+
+## Todo list
+
+- [x] Preprocess
+- [ ] Training
+- [ ] Evaluation
+
 # NeuTraj
 
 This is a seed guided neural metric learning approach for calculating trajectory similarities.
