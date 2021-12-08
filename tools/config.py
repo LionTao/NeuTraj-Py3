@@ -4,11 +4,11 @@ gridxypath = './features/toy_traj_grid'
 distancepath = './features/toy_discret_frechet_distance_all_1800'
 
 # Training Prarmeters
-GPU = "4"
+GPU = "0"
 learning_rate = 0.01
 seeds_radio=0.2
-epochs = 100000
-batch_size = 20
+epochs = 100
+batch_size = 360
 sampling_num = 10
 
 distance_type = distancepath.split('/')[2].split('_')[1]
@@ -56,5 +56,5 @@ def config_to_str():
 
 
 if __name__ == '__main__':
-    print '../model/model_training_600_{}_acc_{}'.format((0),1)
-    print config_to_str()
+    print('../model/model_training_600_{}_acc_{}'.format((0),1))
+    print(config_to_str())

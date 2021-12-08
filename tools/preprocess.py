@@ -92,7 +92,7 @@ class Preprocesser(object):
                 if len(traj) > max_len: max_len = len(traj)
                 count += len(traj)
                 for grid in traj:
-                    if useful_grids.has_key(grid):
+                    if grid in useful_grids:
                         useful_grids[grid][1] += 1
                     else:
                         useful_grids[grid] = [len(useful_grids) + 1, 1]

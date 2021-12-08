@@ -1,4 +1,4 @@
-import config
+import tools.config as config
 import numpy as np
 import torch.autograd as autograd
 import torch
@@ -25,10 +25,10 @@ def test_comput_embeddings(self, spatial_net, test_batch = 1025):
         j += test_batch
         embeddings_list.append(embeddings)
         if (j% 1000) == 0:
-            print j
-    print 'embedding time of {} trajectories: {}'.format(self.padded_trajs.shape[0], time.time()-s)
+            print(j)
+    print('embedding time of {} trajectories: {}'.format(self.padded_trajs.shape[0], time.time()-s))
     embeddings_list = torch.cat(embeddings_list, dim=0)
-    print embeddings_list.size()
+    print(embeddings_list.size())
     return embeddings_list.cpu().numpy()
 
 def test_model(self, traj_embeddings, test_range, print_batch=10, similarity = False, r10in50 = False):
@@ -104,22 +104,22 @@ def test_model(self, traj_embeddings, test_range, print_batch=10, similarity = F
         test_traj_num += 1
         if (i % print_batch) == 0:
             # print test_distance
-            print '**----------------------------------**'
-            print s_test_distance[:20]
-            print s_true_distance[:20]
-            print top10_recall
-            print top50_recall
+            print('**----------------------------------**')
+            print(s_test_distance[:20])
+            print(s_true_distance[:20])
+            print(top10_recall)
+            print(top50_recall)
 
     if r10in50:
         error_test = errorr1050
 
-    print 'Test on {} trajs'.format(test_traj_num)
-    print 'Search Top 50 recall {}'.format(float(top_50_count) / (test_traj_num * 50))
-    print 'Search Top 10 recall {}'.format(float(top_10_count) / (test_traj_num * 10))
-    print 'Search Top 10 in Top 50 recall {}'.format(float(top10_in_top50_count) / (test_traj_num * 10))
-    print 'Error true:{}'.format((float(error_true) / (test_traj_num * 10))*84000)
-    print 'Error test:{}'.format((float(error_test) / (test_traj_num * 10))*84000)
-    print 'Error div :{}'.format((float(abs(error_test-error_true)) / (test_traj_num * 10))*84000)
+    print('Test on {} trajs'.format(test_traj_num))
+    print('Search Top 50 recall {}'.format(float(top_50_count) / (test_traj_num * 50)))
+    print('Search Top 10 recall {}'.format(float(top_10_count) / (test_traj_num * 10)))
+    print('Search Top 10 in Top 50 recall {}'.format(float(top10_in_top50_count) / (test_traj_num * 10)))
+    print('Error true:{}'.format((float(error_true) / (test_traj_num * 10))*84000))
+    print('Error test:{}'.format((float(error_test) / (test_traj_num * 10))*84000))
+    print('Error div :{}'.format((float(abs(error_test-error_true)) / (test_traj_num * 10))*84000))
     return (float(top_10_count) / (test_traj_num * 10), \
            float(top_50_count) / (test_traj_num * 50),\
            float(top10_in_top50_count) / (test_traj_num * 10), \
@@ -129,4 +129,4 @@ def test_model(self, traj_embeddings, test_range, print_batch=10, similarity = F
 
 
 if __name__ == '__main__':
-    print config.config_to_str()
+    print(config.config_to_str())

@@ -1,6 +1,6 @@
 import random
 import numpy as np
-import config
+import tools.config as config
 import pickle
 
 np.random.seed(2018)

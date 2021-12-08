@@ -1,6 +1,6 @@
-from sam_cells import SAM_LSTMCell,SAM_GRUCell
+from geo_rnns.sam_cells import SAM_LSTMCell,SAM_GRUCell
 from torch.nn import Module
-from tools import config
+import tools.config as config
 
 import torch.autograd as autograd
 import torch.nn.functional as F
@@ -28,8 +28,8 @@ class RNNEncoder(Module):
             else:
                 self.cell = SAM_LSTMCell(input_size, hidden_size, grid_size, incell=incell).cuda()
 
-        print self.cell
-        print 'in cell update: {}'.format(incell)
+        print(self.cell)
+        print('in cell update: {}'.format(incell))
         # self.cell = torch.nn.LSTMCell(input_size-2, hidden_size).cuda()
     def forward(self, inputs_a, initial_state = None):
         inputs, inputs_len = inputs_a

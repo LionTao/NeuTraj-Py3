@@ -1,6 +1,6 @@
-from memory import Attention, SpatialExternalMemory
+from geo_rnns.memory import Attention, SpatialExternalMemory
 from torch.nn import Module, Parameter
-from tools import  config
+import tools.config as config
 
 import torch
 import torch.nn.functional as F

@@ -2,7 +2,7 @@ import torch.nn.functional as F
 import torch.autograd as autograd
 from torch.nn import Module, Parameter
 import torch
-from tools import config
+import tools.config as config
 import numpy as np
 class WeightMSELoss(Module):
     def __init__(self, batch_size, sampling_num):
@@ -13,7 +13,7 @@ class WeightMSELoss(Module):
             for traj_index in range(sampling_num):
                 self.weight.append(np.array([config.sampling_num - traj_index]))
 
-        self.weight = np.array(self.weight)
+        self.weight = np.array(self.weight,dtype=object).astype(np.float32)
         sum = np.sum(self.weight)
         self.weight = self.weight /sum
         self.weight = Parameter(torch.Tensor(self.weight).cuda(), requires_grad = False)

@@ -4,7 +4,7 @@ import torch.autograd as autograd
 import time
 
 from  torch import nn
-from tools import  config
+import tools.config as config
 
 class Attention(nn.Module):
 

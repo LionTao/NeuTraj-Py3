@@ -5,7 +5,7 @@ This is python3 version of [NeuTraj](https://github.com/yaodi833/NeuTraj)
 ## Todo list
 
 - [x] Preprocess
-- [ ] Training
+- [x] Training
 - [ ] Evaluation
 
 # NeuTraj
