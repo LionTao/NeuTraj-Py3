@@ -180,7 +180,7 @@ class NeuTrajTrainer(object):
                                       stard_LSTM=stard_LSTM, incell=in_cell_update)
 
         if load_model != None:
-            m = torch.load(open(load_model))
+            m = torch.load(load_model)
             spatial_net.load_state_dict(m)
 
             embeddings = tm.test_comput_embeddings(
