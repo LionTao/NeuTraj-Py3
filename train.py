@@ -4,8 +4,8 @@ import tools.config as config
 from geo_rnns.neutraj_trainer import NeuTrajTrainer
 
 if __name__ == '__main__':
-    # print('os.environ["CUDA_VISIBLE_DEVICES"]= {}'.format(os.environ["CUDA_VISIBLE_DEVICES"]))
-    # print(config.config_to_str())
+    print('os.environ["CUDA_VISIBLE_DEVICES"]= {}'.format(os.environ["CUDA_VISIBLE_DEVICES"]))
+    print(config.config_to_str())
     trajrnn = NeuTrajTrainer(tagset_size=config.d, batch_size=config.batch_size,
                              sampling_num=config.sampling_num)
     trajrnn.data_prepare(griddatapath=config.gridxypath, coordatapath=config.corrdatapath,
