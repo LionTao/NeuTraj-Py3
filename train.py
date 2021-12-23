@@ -14,5 +14,5 @@ if __name__ == '__main__':
     trajrnn.neutraj_train(load_model=None, in_cell_update=config.incell,
                           stard_LSTM=config.stard_unit)
 
-    # acc1 = trajrnn.trained_model_eval(load_model="model/best_model.h5")
-    # print(acc1)
+    acc1 = trajrnn.trained_model_eval(load_model="model/best_model.h5")
+    print(acc1)
