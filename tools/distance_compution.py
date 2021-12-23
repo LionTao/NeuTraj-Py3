@@ -89,7 +89,7 @@ def trajectory_distance_combain(trajs_len, batch_size=100, metric_type="hausdorf
         metric_type: 轨迹距离类型
         data_name: 数据集类型
 
-    Returns:
+    Returns: (trans_len,轨迹总数)的距离矩阵
 
     """
     # 加载trajecotry_distance_list的计算结果

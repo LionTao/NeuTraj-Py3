@@ -1,9 +1,13 @@
-import tools.config as config
-import numpy as np
-import torch.autograd as autograd
-import torch
 # from geo_rnns.spatial_memory_lstm_pytorch import SpatialCoordinateRNNPytorch
 import time
+
+import numpy as np
+import torch
+import torch.autograd as autograd
+
+import tools.config as config
+
+
 # from geo_rnns.neutraj_trainer import NeuTrajTrainer
 # from geo_rnns.neutraj_model import NeuTraj_Network
 
@@ -20,9 +24,9 @@ def test_comput_embeddings(self, spatial_net, test_batch=1025):
     s = time.time()
     while j < self.padded_trajs.shape[0]:
         for i in range(self.batch_size):
-            out = spatial_net.rnn([autograd.Variable(torch.Tensor(self.padded_trajs[j:j+test_batch]),
+            out = spatial_net.rnn([autograd.Variable(torch.Tensor(self.padded_trajs[j:j + test_batch]),
                                                      requires_grad=False).cuda(),
-                                   self.trajs_length[j:j+test_batch]], hidden)
+                                   self.trajs_length[j:j + test_batch]], hidden)
             # embeddings = out.data.cpu().numpy()
             embeddings = out.data
         j += test_batch
@@ -30,15 +34,17 @@ def test_comput_embeddings(self, spatial_net, test_batch=1025):
         if (j % 1000) == 0:
             print(j)
     print('embedding time of {} trajectories: {}'.format(
-        self.padded_trajs.shape[0], time.time()-s))
+        self.padded_trajs.shape[0], time.time() - s))
     embeddings_list = torch.cat(embeddings_list, dim=0)
     print(embeddings_list.size())
     return embeddings_list.cpu().numpy()
 
 
 def test_model(self, traj_embeddings, test_range, print_batch=10, similarity=False, r10in50=False):
-    top_10_count, l_top_10_count = 0, 0
-    top_50_count, l_top_50_count = 0, 0
+    top_10_count = 0
+    l_top_10_count = 0
+    top_50_count = 0
+    l_top_50_count = 0
     top10_in_top50_count = 0
     test_traj_num = 0
     range_num = test_range[-1]
@@ -51,7 +57,7 @@ def test_model(self, traj_embeddings, test_range, print_batch=10, similarity=Fal
             test_distance = [(j, float(np.exp(-np.sum(np.square(traj_embeddings[i] - e)))))
                              for j, e in enumerate(traj_embeddings)]
             t_similarity = np.exp(-self.distance[i]
-                                  [:len(traj_embeddings)]*config.mail_pre_degree)
+            [:len(traj_embeddings)] * config.mail_pre_degree)
             true_distance = list(enumerate(t_similarity))
             learned_distance = list(
                 enumerate(self.distance[i][:len(self.train_seqs)]))
@@ -134,10 +140,10 @@ def test_model(self, traj_embeddings, test_range, print_batch=10, similarity=Fal
         float(top_10_count) / (test_traj_num * 10)))
     print('Search Top 10 in Top 50 recall {}'.format(
         float(top10_in_top50_count) / (test_traj_num * 10)))
-    print('Error true:{}'.format((float(error_true) / (test_traj_num * 10))*84000))
-    print('Error test:{}'.format((float(error_test) / (test_traj_num * 10))*84000))
+    print('Error true:{}'.format((float(error_true) / (test_traj_num * 10)) * 84000))
+    print('Error test:{}'.format((float(error_test) / (test_traj_num * 10)) * 84000))
     print('Error div :{}'.format(
-        (float(abs(error_test-error_true)) / (test_traj_num * 10))*84000))
+        (float(abs(error_test - error_true)) / (test_traj_num * 10)) * 84000))
     return (float(top_10_count) / (test_traj_num * 10),
             float(top_50_count) / (test_traj_num * 50),
             float(top10_in_top50_count) / (test_traj_num * 10),

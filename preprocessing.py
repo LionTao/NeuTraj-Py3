@@ -7,6 +7,15 @@ from tools.distance_compution import trajectory_distance_combain, trajecotry_dis
 
 
 def distance_comp(coor_path, data_name):
+    """
+    计算每个轨迹和其他轨迹的距离
+    Args:
+        coor_path: cell去重后的轨迹数据列表
+        data_name: 数据集名字
+
+    Returns: None
+
+    """
     # load出来的数据格式是(经过cell去重的坐标轨迹集合,[],最长经过cell去重的坐标轨迹长度)
     # 所以[0]拿到的就是经过cell去重的坐标轨迹列表，注意这里的index已经不是原始数据集的index了
     traj_coord = pickle.load(open(coor_path, 'rb'))[0]

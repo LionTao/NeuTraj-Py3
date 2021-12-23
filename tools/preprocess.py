@@ -60,6 +60,7 @@ class Preprocesser(object):
             isCoordinate: 是否是坐标，目前都是True
 
         Returns: 过滤后的坐标点序列，去除了连续在同一个cell里的点, 且只保留满足条件的第一个点
+                点格式是(lat,lon)
 
         """
         grid_traj = []  # 转换成网格轨迹
@@ -110,7 +111,7 @@ class Preprocesser(object):
         # 对每条轨迹进行基于cell的点去重
         for traj_key in trajs_keys:
             traj = traj_feature_map[traj_key]
-            trajs_hash.append(self.traj2grid_seq(traj, isCoordinate))
+            trajs_hash.append(self.traj2grid_seq(traj, isCoordinate))  # (lat,lon)
         return trajs_hash
 
     def preprocess(self, traj_feature_map, isCoordinate=False):
@@ -145,7 +146,7 @@ class Preprocesser(object):
             return traj_grids, useful_grids, max_len
         elif isCoordinate:
             # 如果是网格化的数据的话进入这里
-            # 得到经过cell去重的轨迹
+            # 得到经过cell去重的轨迹 (lat,lon)
             traj_grids = self._traj2grid_preprocess(
                 traj_feature_map, isCoordinate=isCoordinate)
 
@@ -229,12 +230,13 @@ def trajectory_feature_generation(path='./data/toy_trajs',
     pickle.dump(traj_index, open(
         './features/{}_traj_index'.format(fname), 'wb'))
 
+    # 点格式是(lat,lon)
     trajs, useful_grids, max_len = preprocessor.preprocess(
         traj_index, isCoordinate=True)
 
     print(trajs[0])  # 简答看看第一个轨迹
 
-    # 保存 (经过cell去重的坐标轨迹集合,[],最长经过cell去重的坐标轨迹长度)
+    # 保存 (经过cell去重的坐标轨迹集合,[],最长经过cell去重的坐标轨迹长度) 点格式(lat,lon)
     pickle.dump((trajs, [], max_len), open(
         './features/{}_traj_coord'.format(fname), 'wb'))
 
